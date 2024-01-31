@@ -1,4 +1,0 @@
-asyncpg
-llama-index
-psycopg2
-SQLAlchemy

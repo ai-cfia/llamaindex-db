@@ -1,2 +1,7 @@
 jupyterlab
 notebook
+asyncpg
+llama-index
+psycopg2
+SQLAlchemy
+python-dotenv

@@ -2,6 +2,6 @@ jupyterlab
 notebook
 asyncpg
 llama-index
-psycopg2
+psycopg3
 SQLAlchemy
 python-dotenv

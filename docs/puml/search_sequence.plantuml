@@ -1,0 +1,49 @@
+@startuml search sequence
+
+actor user
+participant "app:Flask" as app
+participant "config:Config" as config
+participant "index:VectorStoreIndex" as index
+participant ":BaseRetriever" as retriever
+entity "ada:EmbedModel" as ada
+database "llamaindexdb" as data
+
+
+user -> app: POST /search/llama query
+activate app
+app -> config: get index
+app -> index: get index with search_params
+activate index
+create retriever
+index -> retriever: create with search_params
+index --> app: retriever
+deactivate index
+app -> retriever: retrieve with query
+activate retriever
+retriever -> ada: get embeddings for query
+retriever -> data: match embeddings
+activate data
+data --> retriever: matching nodes
+deactivate data
+retriever --> app: nodes
+deactivate retriever
+app -> app: transform nodes
+app --> user: results
+deactivate app
+
+
+<style>
+legend {
+    Fontsize 12
+    BackgroundColor white
+    LineColor white
+    HorizontalAlignment center
+}
+</style>
+legend
+<img:../img/logo.png{scale=0.25}>
+cfia.ai-ia.acia@inspection.gc.ca
+kotchikpaguy-landry.allagbe@inspection.gc.ca
+2024-03-21
+end legend
+@enduml

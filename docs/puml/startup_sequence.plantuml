@@ -1,0 +1,29 @@
+@startuml startup sequence
+title Startup Sequence
+
+participant "App Creator" as creator
+
+create "index:VectorStoreIndex" as index
+creator -> index: create with db and embed model info
+
+create "config:Config" as config
+creator -> config: create with index
+
+create "app:Flask" as app
+creator -> app: create with config
+
+<style>
+legend {
+    Fontsize 10
+    BackgroundColor white
+    LineColor white
+    HorizontalAlignment center
+}
+</style>
+legend
+<img:../img/logo.png{scale=0.2}>
+cfia.ai-ia.acia@inspection.gc.ca
+kotchikpaguy-landry.allagbe@inspection.gc.ca
+2024-03-21
+end legend
+@enduml

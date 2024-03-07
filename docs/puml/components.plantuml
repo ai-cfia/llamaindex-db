@@ -1,0 +1,34 @@
+@startuml components
+left to right direction
+<style>
+legend {
+    Fontsize 10
+    BackgroundColor white
+    LineColor white
+    HorizontalAlignment center
+}
+</style>
+
+title Component Diagram
+interface REST
+component "finesse-backend" as fb {
+    package app as "flask app"
+    package ailab_llama_search 
+    note bottom of ailab_llama_search: pip install ailab-llama-search
+}
+database llamaIndexdb {
+    package "vector store" as data_llamaindex
+}
+
+REST -- app
+app --> ailab_llama_search: uses
+ailab_llama_search --> data_llamaindex : reads
+
+legend
+<img:../img/logo.png{scale=0.2}>
+cfia.ai-ia.acia@inspection.gc.ca
+kotchikpaguy-landry.allagbe@inspection.gc.ca
+2024-03-21
+end legend
+
+@enduml

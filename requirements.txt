@@ -16,3 +16,4 @@ llama-index-storage-index-store-postgres
 llama-index-storage-kvstore-postgres
 llama-index-readers-database
 llama-index-readers-web
+dpath

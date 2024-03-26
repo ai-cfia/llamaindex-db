@@ -25,7 +25,7 @@ def search(
 ):
     if not query:
         logging.error("Empty search query received")
-        raise AilabLlamaSearchError("Search query cannot be empty")
+        raise AilabLlamaSearchError("search query cannot be empty.")
 
     retriever = index.as_retriever(**search_params)
     nodes = retriever.retrieve(query)

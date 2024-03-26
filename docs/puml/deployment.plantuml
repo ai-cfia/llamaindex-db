@@ -1,0 +1,16 @@
+@startuml deployment
+left to right direction
+interface REST
+
+cloud Azure {
+    node docker as "Docker container" {
+        component "LlamaIndex API" as api
+    }
+    database volume as "Docker Volume" {
+        folder Container as "Index folder"
+    }
+}
+
+REST -- api
+api --> Container : reads
+@enduml

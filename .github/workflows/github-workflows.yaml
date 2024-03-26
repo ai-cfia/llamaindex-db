@@ -8,7 +8,57 @@ on:
       - synchronize
 
 jobs:
-  #   lint-test: to be determined
+  # temporary
+  list-packages:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v3
+      - id: set-matrix
+        run: |
+          echo "Finding package directories..."
+          PACKAGES=$(find . -maxdepth 1 -type d -exec test -e '{}/requirements.txt' \; -print | sed 's|^\./||' | jq -R . | jq -cs .)
+          PACKAGES=$(find . -maxdepth 1 -type d ! -path . -exec test -e '{}/requirements.txt' \; -print | sed 's|^\./||' | jq -R . | jq -cs .)
+          echo "matrix=${PACKAGES}" >> $GITHUB_OUTPUT
+  # temporary
+  lint-test:
+    needs: list-packages
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        package: ${{ fromJson(needs.list-packages.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11.x"
+          cache: "pip"
+
+      - name: Install dependencies for ${{ matrix.package }}
+        run: |
+          if [ -f ${{ matrix.package }}/requirements.txt ]; then
+            python -m pip install --upgrade pip
+            pip install -r ${{ matrix.package }}/requirements.txt
+          fi
+          pip install ruff
+
+      - name: Lint with ruff (selected rules) in ${{ matrix.package }}
+        run: |
+          ruff check --output-format=github --select=E9,F63,F7,F82 --target-version=py311 ${{ matrix.package }}
+          ruff check --output-format=github --target-version=py311 ${{ matrix.package }}
+
+      - name: Test with unittest in ${{ matrix.package }}
+        run: |
+          cd ${{ matrix.package }}
+          python -m unittest discover -s tests
+        env:
+          LLAMAINDEX_DB_EMBED_MODEL_PARAMS: ${{ secrets.LLAMAINDEX_DB_EMBED_MODEL_PARAMS }}
+          LLAMAINDEX_DB_VECTOR_STORE_PARAMS: ${{ secrets.LLAMAINDEX_DB_VECTOR_STORE_PARAMS }}
+          LLAMAINDEX_DB_TRANS_PATHS: ${{ secrets.LLAMAINDEX_DB_TRANS_PATHS }}
 
   markdown-check:
     uses: ai-cfia/github-workflows/.github/workflows/workflow-markdown-check.yml@main

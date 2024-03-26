@@ -56,3 +56,12 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+
+# Index files
+index/
+
+# Pickle files
+*.pkl
+
+# OS specific
+.DS_Store

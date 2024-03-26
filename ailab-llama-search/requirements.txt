@@ -1,0 +1,6 @@
+llama-index
+llama-index-vector-stores-postgres
+llama-index-embeddings-azure-openai
+llama-index-storage-kvstore-postgres
+python-dotenv
+dpath

@@ -1,8 +1,8 @@
 import unittest
 from unittest.mock import MagicMock, patch
 
-from ailab_llama_search import (
-    AilabLlamaSearchError,
+from ailab_llamaindex_search import (
+    AilabLlamaIndexSearchError,
     VectorStoreIndex,
     create_index_object,
     search,
@@ -49,10 +49,10 @@ class TestAilabLlamaSearch(unittest.TestCase):
         self.mock_index.as_retriever.return_value = self.mock_retriever
     
     def test_search_with_empty_query_error(self):
-        with self.assertRaises(AilabLlamaSearchError):
+        with self.assertRaises(AilabLlamaIndexSearchError):
             search("", self.mock_index)
 
-    @patch('ailab_llama_search.transform')
+    @patch('ailab_llamaindex_search.transform')
     def test_search_calls_transform_on_results(self, mock_transform):
         mock_transform.return_value = {'id': 1, 'name': 'Transformed Node'}
         results = search("test query", self.mock_index)
@@ -60,9 +60,9 @@ class TestAilabLlamaSearch(unittest.TestCase):
         self.assertEqual(len(results), 1)
         self.assertEqual(results[0], {'id': 1, 'name': 'Transformed Node'})
 
-    @patch('ailab_llama_search.AzureOpenAIEmbedding')
-    @patch('ailab_llama_search.PGVectorStore.from_params')
-    @patch('ailab_llama_search.VectorStoreIndex.from_vector_store')
+    @patch('ailab_llamaindex_search.AzureOpenAIEmbedding')
+    @patch('ailab_llamaindex_search.PGVectorStore.from_params')
+    @patch('ailab_llamaindex_search.VectorStoreIndex.from_vector_store')
     def test_create_index_object_initializes_correctly(self, mock_from_vector_store, mock_from_params, mock_azure_openai_embedding):
         mock_embed_model = MagicMock()
         mock_azure_openai_embedding.return_value = mock_embed_model

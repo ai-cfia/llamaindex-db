@@ -2,7 +2,7 @@ import json
 import os
 import unittest
 
-from ailab_llama_search import create_index_object, search
+from ailab_llamaindex_search import create_index_object, search
 from dotenv import load_dotenv
 
 

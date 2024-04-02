@@ -2,18 +2,18 @@
 
 ## Overview
 
-The `ailab-llama-search` package facilitates querying our custom index built using LlamaIndex and PostgresSQL.
+The `ailab-llamaindex-search` package facilitates querying our custom index built using LlamaIndex and PostgresSQL.
 
 ## Installation
 
 ```bash
-pip install git+https://github.com/ai-cfia/llamaindex-db.git@main#subdirectory=ailab-llama-search
+pip install git+https://github.com/ai-cfia/llamaindex-db.git@main#subdirectory=ailab-llamaindex-search
 ```
 
 ## Usage
 
 ```python
-from ailab_llama_search import create_index_object, search
+from ailab_llamaindex_search import create_index_object, search
 
 # adapt these parameters to your needs
 embed_model_params = {
@@ -40,8 +40,8 @@ trans_paths = {
     "tokens_count": "node/metadata/tokens_count",
     "last_updated": "node/metadata/last_updated",
     "score": "node/metadata/score",
-    "llama_id": "node/id_",
-    "llama_score": "score",
+    "llamaindex_id": "node/id_",
+    "llamaindex_score": "score",
     "content": "node/text",
 }
 

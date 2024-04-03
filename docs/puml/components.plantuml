@@ -13,16 +13,16 @@ title Component Diagram
 interface REST
 component "finesse-backend" as fb {
     package app as "flask app"
-    package ailab_llama_search 
-    note bottom of ailab_llama_search: pip install ailab-llama-search
+    package ailab_llamaindex_search 
+    note bottom of ailab_llamaindex_search: pip install ailab-llamaindex-search
 }
 database llamaIndexdb {
     package "vector store" as data_llamaindex
 }
 
 REST -- app
-app --> ailab_llama_search: uses
-ailab_llama_search --> data_llamaindex : reads
+app --> ailab_llamaindex_search: uses
+ailab_llamaindex_search --> data_llamaindex : reads
 
 legend
 <img:../img/logo.png{scale=0.2}>

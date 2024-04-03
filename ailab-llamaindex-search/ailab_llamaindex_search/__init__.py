@@ -6,8 +6,8 @@ from llama_index.embeddings.azure_openai import AzureOpenAIEmbedding
 from llama_index.vector_stores.postgres import PGVectorStore
 
 
-class AilabLlamaSearchError(Exception):
-    """Generic Ailab llama search error."""
+class AilabLlamaIndexSearchError(Exception):
+    """Generic Ailab LlamaIndex search error."""
 
 
 def transform(node_dict: dict, paths: dict):
@@ -25,7 +25,7 @@ def search(
 ):
     if not query:
         logging.error("Empty search query received")
-        raise AilabLlamaSearchError("search query cannot be empty.")
+        raise AilabLlamaIndexSearchError("search query cannot be empty.")
 
     retriever = index.as_retriever(**search_params)
     nodes = retriever.retrieve(query)

@@ -2,7 +2,8 @@
 
 ## Overview
 
-The `ailab-llamaindex-search` package facilitates querying our custom index built using LlamaIndex and PostgresSQL.
+The `ailab-llamaindex-search` package facilitates querying our custom index
+built using LlamaIndex and PostgresSQL.
 
 ## Installation
 
@@ -46,7 +47,7 @@ trans_paths = {
 }
 
 index = create_index_object(embed_model_params, vector_store_params)
-search_results = search("your query", index, trans_paths=trans_paths)
+search_results = search("your query", index, similarity_top_k=10, trans_paths=trans_paths)
 
 for result in search_results:
     print(result)

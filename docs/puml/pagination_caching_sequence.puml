@@ -1,0 +1,52 @@
+@startuml search sequence
+
+actor user
+participant ":Flask" as app
+database "cache" as cache
+participant ":Config" as config
+participant ":VectorStoreIndex" as index
+participant ":BaseRetriever" as retriever
+entity "ada:EmbedModel" as ada
+database "llamaindex_db" as data
+
+
+user -> app: POST /search/llamaindex\nparams: query, top, skip
+app -> cache: get results for query 
+alt no cached results
+activate app
+app -> config: get index
+app -> index: get retriever
+activate index
+create retriever
+index -> retriever: create(similarity_top_k=high)
+index --> app: retriever
+deactivate index
+app -> retriever: retrieve(query)
+activate retriever
+retriever -> ada: get embeddings for query
+retriever -> data: match embeddings
+activate data
+return matching nodes
+return nodes
+app -> app: filter out\nduplicate url nodes
+app -> app: transform nodes
+app -> cache: set results for query
+end alt
+app -> user: slice results from skip to top
+deactivate app
+
+<style>
+legend {
+    Fontsize 12
+    BackgroundColor white
+    LineColor white
+    HorizontalAlignment center
+}
+</style>
+legend
+<img:../img/logo.png{scale=0.25}>
+cfia.ai-ia.acia@inspection.gc.ca
+kotchikpaguy-landry.allagbe@inspection.gc.ca
+2024-03-21
+end legend
+@enduml

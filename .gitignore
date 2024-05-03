@@ -62,6 +62,7 @@ index/
 
 # Pickle files
 *.pkl
+*.pickle
 
 # OS specific
 .DS_Store

@@ -17,3 +17,7 @@ llama-index-storage-kvstore-postgres
 llama-index-readers-database
 llama-index-readers-web
 dpath
+tiktoken
+beautifulsoup4
+scrapy
+nest_asyncio

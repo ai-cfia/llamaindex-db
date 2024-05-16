@@ -66,3 +66,5 @@ index/
 
 # OS specific
 .DS_Store
+
+*.csv
